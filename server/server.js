@@ -1,43 +1,27 @@
-const { makeExecutableSchema } = require('graphql-tools');
 const express = require('express');
 const app = express();
+const cors = require('cors')
+const bodyParser = require('body-parser')
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
 const { graphiqlExpress, graphqlExpress } = require('graphql-server-express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const { makeExecutableSchema } = require('graphql-tools');
+const resolvers  = require('./../controller/resolvers.js');
 const typeDefs = require('./../controller/graphqlSchema.js');
-const { resolvers, directiveResolvers }  = require('./../controller/resolvers.js');
 
-// Put together a schema
 const schema = makeExecutableSchema({
-	typeDefs,
-	resolvers,
-	directiveResolvers
-});
+  typeDefs,
+  resolvers
+})
+
 
 app.use('*', cors({ origin: 'http://localhost:8080' }));
+app.use('*', bodyParser.json());
+app.use('*', bodyParser.urlencoded({extended: true}));
 
-// The GraphQL endpoint
-app.use('/graphql', bodyParser.json(), bodyParser.urlencoded({extended: true}), graphqlExpress({ schema }));
+app.use('/graphql',  graphqlExpress({ schema }));
 
-// app.post('/graphql', bodyParser.json(), graphqlExpress({ schema }), (req, res) => {
-// 	console.log('got here');
-// 	res.send('fuck yeah');
-// });
+app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
+server.listen(3000, () => console.log('GraphQL is now running on http://localhost:3000'));
 
-app.use('/', graphiqlExpress({
-	endpointURL: '/graphql',
-}));
-
-
-server.listen(3000, () => {
-	console.log('GraphQL Server is now running on http://localhost:3000');
-});
-
-//loads bundle
-app.use(express.static(__dirname + './..public'));
-
-
-
+app.use(express.static(__dirname + './..public')); //loads bundle

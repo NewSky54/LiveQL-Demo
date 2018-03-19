@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+key={ind}@import url('https://fonts.googleapis.com/css?family=Nunito');
 body {
-  padding: 50px;
+  padding: 0px 0px;
+  width: 0px 0px;
   background-color: #66CCFF;
   font-family: sans-serif;
 }
@@ -10,35 +11,67 @@ body {
   align-items: center;
   text-align: center;
 }
-button {
-  padding: 10px;
+.Navbar{
+  width: 70rem;
+}
+.parent{
+  display: flex;
+  align-items: center; 
+  flex-direction: column;
+  margin: 25px 0px 20px 0px;
+}
+.loader{
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+}
+
+.like-button {
+  padding: 12px;
   font-size: 16px;
   margin: 10px;
   padding-right: 10px;
   background-color: #0066FF;
   color: #FFF;
-  border: 2px solid #0066FF;
+  border: 1px solid #0066FF;
   border-radius: 10px;
   outline: 0; 
 }
-button:hover {
+#delete-button{
+  color: #FFFFFF;
+  background-color: #EF6365;
+  border: 1px solid hsla(0, 0%, 0%, 0.2);  
+  padding: 11px;
+  font-size: 16px;
+  margin: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  outline: 0; 
+}
+#like-button:hover {
   background-color: #FFFFFF;
   color: #0066FF;
   border: 2px solid #FFFFFF;
   cursor: pointer;
   outline: 0; 
 }
+#delete-button:hover {
+  background-color: #FFFFFF;
+  color: #EF6365;
+  border: 2px solid #FFFFFF;
+  cursor: pointer;
+  outline: 0; 
+}
 .comments{
+  text-align: center;
+  width: 43rem;
   font-family: 'Nunito';
-  height: 65px;
-  margin-right: 28px;
   margin-bottom: 10px;
+  padding-bottom: 10px;
   font-size: 1.4em;
-  font-weight: 800;
   border: 1px solid white;
   border-radius: 5px;
   background-image: linear-gradient(45deg, #B3E5FC, #E1F5FE);
-  opacity: 1;
 }
 #author{
   color: red;
@@ -52,9 +85,14 @@ h1 {
   font-size: 75px; line-height: 74px; 
   font-weight: 700; margin: 0 5px 24px; 
   padding: 10px; 
-  margin: 0 5px 24px; 
   font-family: 'Libre Baskerville', serif;
   border-radius: 5px;
+}
+.parentForm{
+  text-align: center;
+}
+.parentInput{
+  margin: 20px 0px;
 }
 input {
   text-align: center;

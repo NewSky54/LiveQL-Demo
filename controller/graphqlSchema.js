@@ -1,11 +1,7 @@
-
-
 //type query, with key users points to another type User, and demands it returns as array.
 //type User returns a username and password, both of types string. Inside of resolvers we need a users key
-//that points to a function that goes and fetches that data and returns the types that fit the demanded Schema, (User)
-
+//that points to a function that goes and fetches that data and returns the types that fit the demanded Schema, (Use
 const schema = `
-	directive @live on FIELD | FIELD_DEFINITION | QUERY
 	type Query {
     users: [User]
     singleUser(username: String): User

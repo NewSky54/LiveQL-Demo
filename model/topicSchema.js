@@ -1,8 +1,7 @@
 const credentials = require('./../credentials');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-mongoose.connect(`mongodb://${credentials.dbUsername}:${credentials.dbPassword}@ds249418.mlab.com:49418/graphql_practice`);
-
+mongoose.connect(`mongodb://${credentials.dbUsername}:${credentials.dbPassword}@ds111791.mlab.com:11791/liveql-demo`);
 
 var topicSchema = new Schema({
 	topic: String,
