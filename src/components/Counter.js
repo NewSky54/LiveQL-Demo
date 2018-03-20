@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import gql from 'graphql-tag';
 require('isomorphic-fetch');
 
 
@@ -18,7 +17,7 @@ class Counter extends React.Component {
     const _id = e.target.id;
     console.log('ID', _id);
     
-    const increaseLikes = gql`
+    const increaseLikes = `
     mutation increaseLikes($_id: String!) {
       increaseLikes(_id: $_id) {
         topicId
@@ -45,7 +44,7 @@ class Counter extends React.Component {
   }
 
 	render() {
-    console.log('PROPS', this.props.id)
+    // console.log('PROPS', this.props.id)
     return (
         <span> 
           <button className='like-button' id={this.props.id} onClick={this.increment}>Like {this.props.likeCount}</button>

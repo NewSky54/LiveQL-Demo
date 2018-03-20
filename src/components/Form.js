@@ -6,7 +6,8 @@ class Form extends React.Component {
     super();
     this.state = {
       value: '',
-      comments: []
+      comments: [],
+      onComment: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,48 +19,79 @@ class Form extends React.Component {
   }
 
   handleSubmit(e) { // Gets call when the form is submitted
-    let { comments, value } = this.state;
+    e.preventDefault();
+    let { value, comments, onComment } = this.state;
+
+    const addComment = `
+      mutation addComment($topicId: String!, $text: String!, $netScore: Int) {
+        addComment(topicId: $topicId, text: $text, netScore: $netScore) {
+          _id
+          topicId
+          text
+          netScore
+        }
+      }
+    `;
     if (value !== '') {
+
       let newArr = [...comments];
       newArr.unshift({
         key: Date.now(),
         text: value,
-        children: []
       })
+
       this.setState({
         comments: newArr,
         value: ''
-      })
+      }, 
+      () => {
+        fetch('http://localhost:3000/graphql', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: addComment,
+            variables: {
+              topicId: this.props.id,
+              text: this.state.comments[0].text,
+              netScore: 0
+            }
+          }),
+        })
+          .then(res => res.json())
+          .then(res => this.setState({ onComment: res.data })) 
+        });
+      }
     }
-    console.log(comments)
-    e.preventDefault();
-  }
-  
-  createComments(comment) {
-    console.log(comment)
-    let {comments} = this.state;
-    let filteredComments;
-    return (
-      <dd key={comment.key}>
 
-          {comment.text}
-          <Counter/>
-      </dd>
-    );
-  }
+    createComments(){
+      return this.state.onComment.map(({ _id, topicId, text, netScore }) => {
+        return (
+          <div className='commentss'> 
+            {text} 
+            <Counter id={_id} likeCount={netScore}/>
+          </div>
+        );
+      });
+    }
 
-	render() {
-    let commentItems = this.state.comments.map(this.createComments)
+
+  render() { 
+    // map over elements in state. Save in createComments
     return (
       <div className='mainform'>
         <form onSubmit={this.handleSubmit}>
           <label>
-              Comment: <input type="text" value={this.state.value} onChange={this.handleChange} />
+              <input
+                placeholder="Reply"
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+              />
           </label>
         </form>
-        <ol>
-          {commentItems}
-        </ol>
+        {/* <div>
+          {this.createComments}
+        </div> */}
       </div>
     );
   }

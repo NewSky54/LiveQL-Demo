@@ -14,12 +14,40 @@ class ChildComments extends React.Component {
   }
 
   createComments(comment) {
-    console.log("Creating")
+    const { key, text } = comment;
+    const addTopic = `
+      mutation addTopic($topic: String!){
+        addTopic (topic: $topic) {
+          topic
+          comments {
+            _id
+            author
+            topicId
+            text
+            netScore
+          }
+        } 
+      }
+    `;
+    
+    fetch('http://localhost:3000/graphql', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        query: addTopic,
+        variables: { topic: text }
+      }),
+    })
+    .then(res => res.json())
+    .then((res) => console.log(res.data))
+
+    console.log("Creating", comment)
     return (
       <div className="comments" key={comment.key}>
-          {comment.text}
-          <Counter/>
-          <button id='delete-button' onClick={() => this.delete(comment.key)}> Delete </button>
+        <div className="topics">
+          {comment.text}      
+        </div>
+          {/* <button id='delete-button' onClick={() => this.delete(comment.key)}> Delete </button> */}
           <Form/>
       </div>
     );

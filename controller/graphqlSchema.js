@@ -29,7 +29,7 @@ const schema = `
   }
   type Mutation {
     addTopic(topic: String ): Topic
-    addComment(author: String!, topicId: String!, text: String!, netScore: Int): Comment
+    addComment(topicId: String!, text: String!, netScore: Int): Comment
     addUser(username: String, password: String): User
     updatePassword(username: String, newPassword: String): User
     deleteUser(username: String, password: String): User

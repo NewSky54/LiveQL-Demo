@@ -96,13 +96,13 @@ resolvers.Mutation.addTopic = (_, topicObj) => {
 }
 
 resolvers.Mutation.addComment = (_, commentObj) => {
+	console.log('inside addComment mutation');
 	return Comments.create(commentObj).then((result) => {
 		return result;
 	});
 }
 
 resolvers.Mutation.increaseLikes = (_, original) => {
-	console.log('inside increaseLikes mutation');
 	return Comments.findOne({_id: original._id}).then((result) => {
 		let updated = result;
 		updated.netScore += 1;

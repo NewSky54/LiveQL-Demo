@@ -6,6 +6,7 @@ import FlipMove from 'react-flip-move';
 import Header from './../components/Header';
 import Comments from './Comments';
 import Counter from './../components/Counter';
+import Form from './../components/Form.js';
 require('isomorphic-fetch');
 
 class Demo extends React.Component {
@@ -42,16 +43,17 @@ class Demo extends React.Component {
   render() {
     let topics;
     if (this.state.onComment) {
-      console.log('this.state.onComment.getAllTopics', this.state.onComment.getAllTopics);
-
       topics = this.state.onComment.getAllTopics.map(({ _id, topic, comments, netScore }) => {
         return (
           <div className='comments' key={_id}>
-            {topic}
-            {comments.map(({ _id, text, netScore }) => <div key={'text' + _id}>{text} {<Counter id={_id} likeCount={netScore}/>} </div>)}
+            <div className='topics'>
+              {topic}
+            </div>
+            <Form id={_id} />
+            {comments.map(({ _id, text, netScore }) => <div className='childComment' key={'text' + _id}>{text} {<Counter id={_id} likeCount={netScore}/>}</div>).reverse()}
           </div>
-        )
-      });
+        );
+      }).reverse();
       return (
         <div className="parent">
           <Header />

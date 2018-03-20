@@ -52,7 +52,13 @@ class Comments extends Component {
       <div>
         <form className='parentForm' onSubmit={this.handleSubmit}>
           <label>
-          <input className="parentInput" placeholder="Make a Comment" type="text" value={this.state.value} onChange={this.handleChange} />
+          <input 
+            className="parentInput" 
+            placeholder="Make a Comment" 
+            type="text" 
+            value={this.state.value} 
+            onChange={this.handleChange} 
+          />
           </label>
         </form>
         <ChildComments 
