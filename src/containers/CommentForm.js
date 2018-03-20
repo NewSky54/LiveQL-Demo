@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
-import ChildComments from './../components/ChildComments';
 
-class Comments extends Component {
+class CommentForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -11,15 +10,29 @@ class Comments extends Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.deleteComment = this.deleteComment.bind(this);
   }
 
   handleChange(e) {
     this.setState({ value: e.target.value });
   }
   
-  handleSubmit(e) { // Gets call when the form is submitted
+  handleSubmit(e) { 
+    e.preventDefault();
     let { comments, value } = this.state;
+    const addTopic = `
+      mutation addTopic($topic: String!){
+        addTopic (topic: $topic) {
+          topic
+          comments {
+            _id
+            author
+            topicId
+            text
+            netScore
+          }
+        } 
+      }
+    `;
     if (value !== '') {
       let newArr = [...comments];
       newArr.unshift({
@@ -30,26 +43,26 @@ class Comments extends Component {
       this.setState({
         comments: newArr,
         value: ''
+      }, () => {
+        fetch('http://localhost:3000/graphql', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            query: addTopic,
+            variables: { 
+              topic: this.state.comments[0].text,
+            }
+          }),
+        })
+        .then(res => res.json())
       })
-      console.log(comments)
-      console.log(`Comments array: ${comments}`);
     }
-    e.preventDefault();
   }
-  
-  deleteComment(key) {
-    let filteredComments = this.state.comments.filter((item) => {
-      return (item.key !== key);
-    });
-    this.setState({
-      comments: filteredComments
-    });
-    console.log('Comments:', filteredComments)
-  } 
-
+ 
   render() {
     return (
       <div>
+        <FlipMove duration={300} easing="ease-out">
         <form className='parentForm' onSubmit={this.handleSubmit}>
           <label>
           <input 
@@ -61,12 +74,9 @@ class Comments extends Component {
           />
           </label>
         </form>
-        <ChildComments 
-          entries={this.state.comments}  
-          delete={this.deleteComment} 
-        />
+        </FlipMove>
       </div>
     );
   }
 }
-export default Comments;
+export default CommentForm;

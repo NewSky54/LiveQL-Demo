@@ -4,9 +4,9 @@ import ReactPlayer from 'react-player'
 import { CubeGrid } from 'better-react-spinkit'
 import FlipMove from 'react-flip-move';
 import Header from './../components/Header';
-import Comments from './Comments';
+import CommentForm from './CommentForm';
 import Counter from './../components/Counter';
-import Form from './../components/Form.js';
+import ReplyForm from './../components/ReplyForm.js';
 import liveClient from '../../liveql_modules/liveqlClient'
 require('isomorphic-fetch');
 
@@ -60,7 +60,7 @@ class Demo extends React.Component {
             <div className='topics'>
               {topic}
             </div>
-            <Form id={_id} />
+            <ReplyForm id={_id} />
             {comments.map(({ _id, text, netScore }) => <div className='childComment' key={'text' + _id}>{text} {<Counter id={_id} likeCount={netScore}/>}</div>).reverse()}
           </div>
         );
@@ -69,7 +69,7 @@ class Demo extends React.Component {
         <div className="parent">
           <Header />
           <ReactPlayer url='https://vimeo.com/channels/animatedshorts/137531269' />
-          <Comments />
+          <CommentForm />
           {topics}
         </div>
       )

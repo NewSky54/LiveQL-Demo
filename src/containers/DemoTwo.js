@@ -4,7 +4,7 @@ import ReactPlayer from 'react-player'
 import { CubeGrid } from 'better-react-spinkit'
 import FlipMove from 'react-flip-move';
 import Header from './../components/Header';
-import Comments from './Comments';
+import CommentForm from './CommentForm';
 import Counter from './../components/Counter';
 require('isomorphic-fetch');
 
@@ -56,7 +56,7 @@ class Demotwo extends React.Component {
         <div className="parent">
           <Header />
           {/* <ReactPlayer url='https://www.youtube.com/watch?v=dMH0bHeiRNg' /> */}
-          <Comments />
+          <CommentForm />
         </div>
       )
     } else {

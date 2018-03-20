@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
 import Counter from './Counter';
 
-class Form extends React.Component {
+class ReplyForm extends React.Component {
   constructor(props) {
     super();
     this.state = {
       value: '',
-      comments: [],
-      onComment: []
+      comments: []
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.createComments = this.createComments.bind(this);
   }
 
   handleChange(e) {
     this.setState({ value: e.target.value });
   }
 
-  handleSubmit(e) { // Gets call when the form is submitted
+  handleSubmit(e) { 
     e.preventDefault();
-    let { value, comments, onComment } = this.state;
 
+    let { value, comments } = this.state;
     const addComment = `
       mutation addComment($topicId: String!, $text: String!, $netScore: Int) {
         addComment(topicId: $topicId, text: $text, netScore: $netScore) {
@@ -33,7 +31,6 @@ class Form extends React.Component {
       }
     `;
     if (value !== '') {
-
       let newArr = [...comments];
       newArr.unshift({
         key: Date.now(),
@@ -58,25 +55,11 @@ class Form extends React.Component {
           }),
         })
           .then(res => res.json())
-          .then(res => this.setState({ onComment: res.data })) 
         });
       }
     }
 
-    createComments(){
-      return this.state.onComment.map(({ _id, topicId, text, netScore }) => {
-        return (
-          <div className='commentss'> 
-            {text} 
-            <Counter id={_id} likeCount={netScore}/>
-          </div>
-        );
-      });
-    }
-
-
   render() { 
-    // map over elements in state. Save in createComments
     return (
       <div className='mainform'>
         <form onSubmit={this.handleSubmit}>
@@ -89,12 +72,9 @@ class Form extends React.Component {
               />
           </label>
         </form>
-        {/* <div>
-          {this.createComments}
-        </div> */}
       </div>
     );
   }
 }
 
-export default Form;
+export default ReplyForm;
