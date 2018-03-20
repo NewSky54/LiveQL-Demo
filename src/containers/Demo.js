@@ -7,6 +7,7 @@ import Header from './../components/Header';
 import Comments from './Comments';
 import Counter from './../components/Counter';
 import Form from './../components/Form.js';
+import liveClient from '../../liveql_modules/liveqlClient'
 require('isomorphic-fetch');
 
 class Demo extends React.Component {
@@ -15,9 +16,15 @@ class Demo extends React.Component {
     this.state = {
       onComment: null
     };
+    this.triggerRefresh = this.triggerRefresh.bind(this)
+  }
+
+  triggerRefresh(data) {
+   this.setState({ onComment: data.data })
   }
 
   componentWillMount() {
+    liveClient.connect('http://localhost:3000')
     const query = `
       getAllTopics {
         _id
@@ -37,7 +44,11 @@ class Demo extends React.Component {
       body: JSON.stringify({ query: `{ ${query} }` }),
     })
     .then(res => res.json())
-    .then((res) => this.setState({ onComment: res.data }))
+    .then((res) => {
+      
+      this.setState({ onComment: res.data })
+      liveClient.on('triggerRefresh', this.triggerRefresh)
+    })
   }
 
   render() {

@@ -8,7 +8,8 @@ const { graphiqlExpress, graphqlExpress } = require('graphql-server-express');
 const { makeExecutableSchema } = require('graphql-tools');
 const resolvers  = require('./../controller/resolvers.js');
 const typeDefs = require('./../controller/graphqlSchema.js');
-require('./../liveql_modules/liveqlResponse.js').initialize(server);
+const liveServer = require('./../liveql_modules/liveqlResponse.js')
+liveServer.initialize(server);
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -25,21 +26,7 @@ app.use('/graphql',  graphqlExpress({
   formatResponse(res){
 
     const query = `
-      getAllTopics {
-        _id
-        topic
-        comments {
-          _id
-          author
-          topicId
-          text
-          netScore
-        }
-      }`;
-
-    console.log('RES', res);
-    graphql(schema, `
-    getAllTopics {
+    query { getAllTopics {
       _id
       topic
       comments {
@@ -48,9 +35,13 @@ app.use('/graphql',  graphqlExpress({
         topicId
         text
         netScore
-      }
-    }`)
-    .then(data => console.log('DATA', data))
+      }} 
+    }`;
+
+    graphql(schema, query)
+      .then(data => {
+        liveServer.io.sockets.emit('triggerRefresh', data)
+    })
     return res;
   }
 }));

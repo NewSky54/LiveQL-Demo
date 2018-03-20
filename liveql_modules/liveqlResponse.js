@@ -72,6 +72,7 @@ liveServer.initialize =  (server) => {
 // };
 
 liveServer.emit = (schema) => {
+	liveServer.io.sockets.emit('triggerRefresh', data)
 	// for (hashKey in rdl.queue) {
 	// 	const query = async (rdlHash, hashKey) => {
 	// 		graphql(schema, rdlHash.query)

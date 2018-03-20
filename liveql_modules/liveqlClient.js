@@ -19,13 +19,14 @@ liveClient.windowUnload = () => {
 }
 
 liveClient.on = (socketHandler, callback) => {
-	if (!liveClient.handles.includes(socketHandler)) {
-		liveClient.handles.push(socketHandler)
-		liveClient.socket.on(socketHandler, (data) => {
+	// if (!liveClient.handles.includes(socketHandler)) {
+	// 	liveClient.handles.push(socketHandler)
+
+	// }
+			liveClient.socket.on(socketHandler, (data) => {
 			//the developer will pass in their callback for the data.
 			callback(data);
 		});
-	}
 }
 
 

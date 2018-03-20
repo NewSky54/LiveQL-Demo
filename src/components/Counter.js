@@ -39,7 +39,7 @@ class Counter extends React.Component {
       }),
     })
     .then(res => res.json())
-    .then((res) => console.log(res.data))
+    // .then((res) => console.log(res.data))
 
   }
 
