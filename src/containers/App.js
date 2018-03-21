@@ -14,18 +14,18 @@ class App extends React.Component {
 
   render() {
     return (
-      <Tabs contentContainerClassName="Navbar" onChange={this.handleCallToRouter}>
-        <Tab label="Demo One" value="/">
+      // <Tabs contentContainerClassName="Navbar" onChange={this.handleCallToRouter}>
+      //   <Tab label="Demo One" value="/">
           <div>
              <Demo />
           </div>
-        </Tab>
+        /* </Tab>
         <Tab label="Demo Two" value="/two">
           <div>
             <Demotwo />
           </div>
-        </Tab>
-      </Tabs>     
+        </Tab
+      </Tabs>      */
   );
     // return (
     //   <Router>

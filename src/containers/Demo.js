@@ -45,7 +45,6 @@ class Demo extends React.Component {
     })
     .then(res => res.json())
     .then((res) => {
-      
       this.setState({ onComment: res.data })
       liveClient.on('triggerRefresh', this.triggerRefresh)
     })
