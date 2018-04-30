@@ -1,12 +1,10 @@
 const credentials = require('./../credentials');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-mongoose.connect(`mongodb://${credentials.dbUsername}:${credentials.dbPassword}@ds111791.mlab.com:11791/liveql-demo`);
 
-
-var usersSchema = new Schema({
+const usersSchema = new Schema({
 	username:  String,
-	password: String,
+	password: String, // Encrypt - bcrypt 
 	comments: Array
 }, {collection: 'Users'});
 

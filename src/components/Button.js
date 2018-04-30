@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 require('isomorphic-fetch');
 
 
-class Counter extends React.Component {
+class Button extends React.Component {
   constructor() {
     super();
     this.state = {}
@@ -45,4 +45,4 @@ class Counter extends React.Component {
   }
 }
 
-export default Counter;
+export default Button;

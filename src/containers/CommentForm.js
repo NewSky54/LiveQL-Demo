@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import FlipMove from 'react-flip-move';
 
 class CommentForm extends Component {
   constructor(props) {
@@ -62,7 +61,6 @@ class CommentForm extends Component {
   render() {
     return (
       <div>
-        <FlipMove duration={300} easing="ease-out">
         <form className='parentForm' onSubmit={this.handleSubmit}>
           <label>
           <input 
@@ -74,7 +72,6 @@ class CommentForm extends Component {
           />
           </label>
         </form>
-        </FlipMove>
       </div>
     );
   }

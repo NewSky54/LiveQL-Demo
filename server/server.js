@@ -11,11 +11,12 @@ const typeDefs = require('./../controller/graphqlSchema.js');
 const liveServer = require('./../liveql_modules/liveqlResponse.js')
 liveServer.initialize(server);
 
+mongoose.connect(`mongodb://${credentials.dbUsername}:${credentials.dbPassword}@ds111791.mlab.com:11791/liveql-demo`);
+
 const schema = makeExecutableSchema({
   typeDefs,
   resolvers
 })
-
 
 app.use('*', cors({ origin: 'http://localhost:8080' }));
 app.use('*', bodyParser.json());
@@ -23,7 +24,7 @@ app.use('*', bodyParser.urlencoded({extended: true}));
 
 app.use('/graphql',  graphqlExpress({ 
   schema: schema,
-  formatResponse(res){
+  formatResponse(res)
 
     const query = `
     query { getAllTopics {

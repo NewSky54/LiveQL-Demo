@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import ReactPlayer from 'react-player'
 import { CubeGrid } from 'better-react-spinkit'
-import FlipMove from 'react-flip-move';
 import Header from './../components/Header';
 import CommentForm from './CommentForm';
-import Counter from './../components/Counter';
 import ReplyForm from './../components/ReplyForm.js';
+import Button from './../components/Button';
 import liveClient from '../../liveql_modules/liveqlClient'
 require('isomorphic-fetch');
 
@@ -60,7 +59,7 @@ class Demo extends React.Component {
               {topic}
             </div>
             <ReplyForm id={_id} />
-            {comments.map(({ _id, text, netScore }) => <div className='childComment' key={'text' + _id}>{text} {<Counter id={_id} likeCount={netScore}/>}</div>).reverse()}
+            {comments.map(({ _id, text, netScore }) => <div className='childComment' key={'text' + _id}>{text} {<Button id={_id} likeCount={netScore}/>}</div>).reverse()}
           </div>
         );
       }).reverse();

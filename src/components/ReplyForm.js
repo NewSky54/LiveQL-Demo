@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Counter from './Counter';
+import Button from './Button';
 
 class ReplyForm extends React.Component {
   constructor(props) {
@@ -54,7 +54,7 @@ class ReplyForm extends React.Component {
             }
           }),
         })
-          .then(res => res.json())
+        .then(res => res.json())
         });
       }
     }
